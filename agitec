@@ -1,0 +1,30 @@
+#!/bin/bash
+
+PATH=/bin:/usr/bin:/sbin:/usr/sbin
+
+case "$1" in
+
+    start)
+        echo -n "Starting"
+        cd /var/www/html/web/USSD/loan/Auth
+        php  pay_loan.php
+    ;;
+
+    stop)
+        echo -n "Stopping"
+        kill -9 `ps ax | grep "php  pay_loan.php" | grep -v grep | awk '{ print $1 }'`
+    ;;
+
+    restart)
+        $0 stop || true
+        $0 start
+    ;;
+
+    *)
+    echo "Usage: /etc/init.d/agitec {start|stop|restart}"
+    exit 1
+    ;;
+
+esac
+
+exit 0
